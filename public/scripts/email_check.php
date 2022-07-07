@@ -274,10 +274,15 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 		
 		$a=	'{' . $servidor . ':' . $porta . '/' .$tipo .'/' .$parametros.'}' . $caixa;
 	
-	
-		$mbox = imap_open($a,$email, $senha) or ($err =  imap_last_error()); 
-		
-		
+	    try {
+            $mbox = imap_open($a, $email, $senha) or ($err = imap_last_error());
+
+            return imap_errors();
+
+        } catch (Exception $e){
+            $sQuery = "update emails set `check`='0', log='". $err . "',  updated_at=Now() where id=$id";
+            exit;
+        }
 		
 		
 		if(!empty($err)){
