@@ -72,7 +72,7 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
         if (isset($part->disposition)){ 
             if ($part->disposition == 'attachment'){ 
                 
-                echo $sec;
+                //echo $sec;
                
 				$params = $part->dparameters;
 				
@@ -155,47 +155,47 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 					try { 
 						
 					
-					
-					if($objPHPExcel->getActiveSheet()->getCell('A7')->getValue()=="CLIENTE" && $objPHPExcel->getActiveSheet()->getCell('J7')->getValue()=="CNPJ"){
+
+					if($objPHPExcel->getActiveSheet()->getCell('A5')->getValue()=="CLIENTE" && $objPHPExcel->getActiveSheet()->getCell('K5')->getValue()=="CNPJ"){
 						
 					    $pcod = strpos($objPHPExcel->getActiveSheet()->getCell('C13')->getFormattedValue(),' ');
 					    
-						$cliente= GetSQLValueString($objPHPExcel->getActiveSheet()->getCell('B7')->getFormattedValue(), "text");
-						$endereco= GetSQLValueString($objPHPExcel->getActiveSheet()->getCell('B8')->getFormattedValue(), "text");
-							$cidade= $objPHPExcel->getActiveSheet()->getCell('B9')->getFormattedValue();
-							$telefone= $objPHPExcel->getActiveSheet()->getCell('B10')->getFormattedValue();
-							$transportadora= $objPHPExcel->getActiveSheet()->getCell('C11')->getFormattedValue();
-							$cnpj_trans= $objPHPExcel->getActiveSheet()->getCell('C12')->getFormattedValue();
-							$cod_cond_pgto= substr($objPHPExcel->getActiveSheet()->getCell('C13')->getFormattedValue(),0,$pcod);
-							$cond_pgto= $objPHPExcel->getActiveSheet()->getCell('C13')->getFormattedValue();
-							$entrega= $objPHPExcel->getActiveSheet()->getCell('C14')->getFormattedValue();
-							$cod_repres= $objPHPExcel->getActiveSheet()->getCell('I5')->getFormattedValue();
-							$nome_repres= $objPHPExcel->getActiveSheet()->getCell('J5')->getFormattedValue();
-							$tel_repres= $objPHPExcel->getActiveSheet()->getCell('L6')->getFormattedValue();
-							$cnpj_repres= $objPHPExcel->getActiveSheet()->getCell('K7')->getFormattedValue();
-							$ie_repres= $objPHPExcel->getActiveSheet()->getCell('G7')->getFormattedValue();
-							$num_repres= $objPHPExcel->getActiveSheet()->getCell('E8')->getFormattedValue();
-							$bairro_repres= $objPHPExcel->getActiveSheet()->getCell('K8')->getFormattedValue();
-							$uf_repres= $objPHPExcel->getActiveSheet()->getCell('G8')->getFormattedValue();
-							$contato_repres= $objPHPExcel->getActiveSheet()->getCell('L9')->getFormattedValue();
-							$suframa= $objPHPExcel->getActiveSheet()->getCell('I13')->getFormattedValue();
-							$email= $objPHPExcel->getActiveSheet()->getCell('G13')->getFormattedValue();
-							$preco_base= $objPHPExcel->getActiveSheet()->getCell('G12')->getFormattedValue();
-							$tipo_desconto= $objPHPExcel->getActiveSheet()->getCell('H12')->getFormattedValue();
-							$regiao_uf= $objPHPExcel->getActiveSheet()->getCell('J12')->getFormattedValue();
-							$desconto_regiao= $objPHPExcel->getActiveSheet()->getCell('L12')->getFormattedValue();
-							$observacao= $objPHPExcel->getActiveSheet()->getCell('D65')->getFormattedValue();
-							$inf_adicional= $objPHPExcel->getActiveSheet()->getCell('D66')->getFormattedValue();
-							$dat_emissao= $objPHPExcel->getActiveSheet()->getCell('L1')->getFormattedValue();
-							$repres_num_pedido= $objPHPExcel->getActiveSheet()->getCell('K3')->getFormattedValue();
-							$cep_repres= $objPHPExcel->getActiveSheet()->getCell('I9')->getFormattedValue();
+						$cliente= GetSQLValueString($objPHPExcel->getActiveSheet()->getCell('B5')->getFormattedValue(), "text");
+						$endereco= GetSQLValueString($objPHPExcel->getActiveSheet()->getCell('B6')->getFormattedValue(), "text");
+							$cidade= $objPHPExcel->getActiveSheet()->getCell('B7')->getFormattedValue();
+							$telefone= $objPHPExcel->getActiveSheet()->getCell('B8')->getFormattedValue();
+							$transportadora= $objPHPExcel->getActiveSheet()->getCell('C9')->getFormattedValue();
+							//$cnpj_trans= $objPHPExcel->getActiveSheet()->getCell('C12')->getFormattedValue();
+							$cod_cond_pgto= substr($objPHPExcel->getActiveSheet()->getCell('C11')->getFormattedValue(),0,$pcod);
+							$cond_pgto= $objPHPExcel->getActiveSheet()->getCell('C11')->getFormattedValue();
+							$entrega= $objPHPExcel->getActiveSheet()->getCell('L12')->getFormattedValue();
+							$cod_repres= $objPHPExcel->getActiveSheet()->getCell('J3')->getFormattedValue();
+							$nome_repres= $objPHPExcel->getActiveSheet()->getCell('K3')->getFormattedValue();
+							$tel_repres= $objPHPExcel->getActiveSheet()->getCell('M4')->getFormattedValue();
+							//$cnpj_repres= $objPHPExcel->getActiveSheet()->getCell('K7')->getFormattedValue();
+							//$ie_repres= $objPHPExcel->getActiveSheet()->getCell('G7')->getFormattedValue();
+							//$num_repres= $objPHPExcel->getActiveSheet()->getCell('E8')->getFormattedValue();
+							//$bairro_repres= $objPHPExcel->getActiveSheet()->getCell('K8')->getFormattedValue();
+							//$uf_repres= $objPHPExcel->getActiveSheet()->getCell('G8')->getFormattedValue();
+							//$contato_repres= $objPHPExcel->getActiveSheet()->getCell('L9')->getFormattedValue();
+							$suframa= $objPHPExcel->getActiveSheet()->getCell('J11')->getFormattedValue();
+							$email= $objPHPExcel->getActiveSheet()->getCell('G8')->getFormattedValue();
+							$preco_base= $objPHPExcel->getActiveSheet()->getCell('G10')->getFormattedValue();
+							$tipo_desconto= $objPHPExcel->getActiveSheet()->getCell('I10')->getFormattedValue();
+							$regiao_uf= $objPHPExcel->getActiveSheet()->getCell('K10')->getFormattedValue();
+							$desconto_regiao= $objPHPExcel->getActiveSheet()->getCell('M10')->getFormattedValue();
+							$observacao= $objPHPExcel->getActiveSheet()->getCell('C12')->getFormattedValue();
+							$inf_adicional= $objPHPExcel->getActiveSheet()->getCell('D65')->getFormattedValue();
+							$dat_emissao= $objPHPExcel->getActiveSheet()->getCell('B3')->getFormattedValue();
+							$repres_num_pedido= $objPHPExcel->getActiveSheet()->getCell('D3')->getFormattedValue();
+							//$cep_repres= $objPHPExcel->getActiveSheet()->getCell('I9')->getFormattedValue();
 							
 							$sQuery= "INSERT INTO pedidos ( cliente, endereco, cidade, telefone, transportadora, cnpj_trans,cod_cond_pgto, cond_pgto, entrega, cod_repres, nome_repres, tel_repres, cnpj_repres, ie_repres, num_repres, bairro_repres, uf_repres, contato_repres, suframa, email, preco_base, tipo_desconto, regiao_uf, desconto_regiao, observacao, inf_adicional, dat_emissao, repres_num_pedido,arquivo) VALUES( $cliente, $endereco, '$cidade', '$telefone', '$transportadora', '$cnpj_trans','$cod_cond_pgto', '$cond_pgto', '$entrega', '$cod_repres', '$nome_repres', '$tel_repres', '$cnpj_repres', '$ie_repres', '$num_repres', '$bairro_repres', '$uf_repres', '$contato_repres', '$suframa', '$email', '$preco_base', '$tipo_desconto', '$regiao_uf', '$desconto_regiao', '$observacao', '$inf_adicional', '$dat_emissao', '$repres_num_pedido', 'xls/$filename' )";
 							mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 							
 							$id_pedido = mysql_insert_id();
 							
-							for ($i=17;$i<=62;$i++){
+							for ($i=14;$i<=60;$i++){
 								
 								
 								$qtd=$objPHPExcel->getActiveSheet()->getCell('A'.$i)->getFormattedValue();
@@ -205,12 +205,13 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 								$unid_venda=$objPHPExcel->getActiveSheet()->getCell('E'.$i)->getFormattedValue();
 								$ipi=$objPHPExcel->getActiveSheet()->getCell('F'.$i)->getFormattedValue();
 								$caixa_master=$objPHPExcel->getActiveSheet()->getCell('G'.$i)->getFormattedValue();
-								$preco_tabela=$objPHPExcel->getActiveSheet()->getCell('H'.$i)->getFormattedValue();
-								$preco_desc_reg=$objPHPExcel->getActiveSheet()->getCell('I'.$i)->getFormattedValue();
-								$preco_negociado=$objPHPExcel->getActiveSheet()->getCell('J'.$i)->getFormattedValue();
-								$preco_final=$objPHPExcel->getActiveSheet()->getCell('K'.$i)->getFormattedValue();
-								$total=$objPHPExcel->getActiveSheet()->getCell('L'.$i)->getFormattedValue();
-								
+								$preco_tabela=$objPHPExcel->getActiveSheet()->getCell('I'.$i)->getFormattedValue();
+								$preco_desc_reg=$objPHPExcel->getActiveSheet()->getCell('J'.$i)->getFormattedValue();
+								$preco_negociado=$objPHPExcel->getActiveSheet()->getCell('K'.$i)->getFormattedValue();
+								$preco_final=$objPHPExcel->getActiveSheet()->getCell('L'.$i)->getFormattedValue();
+								$total=$objPHPExcel->getActiveSheet()->getCell('M'.$i)->getFormattedValue();
+
+                                $marca = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getFormattedValue();
 								if(!empty($qtd) && !empty($cod_item)){
 									$sQuery= "INSERT INTO pedidos_item ( id_pedido, qtd, cod_item, descricao, unid_venda_des, unid_venda, ipi, caixa_master, preco_tabela, preco_desc_reg, preco_negociado, preco_final, total )  VALUES( '$id_pedido', '$qtd', '$cod_item', '$descricao', '$unid_venda_des', '$unid_venda', '$ipi', '$caixa_master', '$preco_tabela', '$preco_desc_reg', '$preco_negociado', '$preco_final', '$total' )";
 									mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
@@ -293,7 +294,7 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 		
 			$last_uid = $uid;
 			
-			echo $firt_uid = imap_uid($mbox,imap_num_msg($mbox));
+			$firt_uid = imap_uid($mbox,imap_num_msg($mbox));
 			
 			for($m = imap_num_msg($mbox); $m >= 1; $m--){ 
 				$uid = imap_uid($mbox,$m);
