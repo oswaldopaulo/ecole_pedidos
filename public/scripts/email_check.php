@@ -274,21 +274,19 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 		
 		$a=	'{' . $servidor . ':' . $porta . '/' .$tipo .'/' .$parametros.'}' . $caixa;
 	
-	    try {
-            $mbox = imap_open($a, $email, $senha) or ($err = imap_last_error());
+	
+        $mbox = imap_open($a, $email, $senha) or ($err = imap_last_error());
 
-            return imap_errors();
+           
 
-        } catch (Exception $e){
-            $sQuery = "update emails set `check`='0', log='". $err . "',  updated_at=Now() where id=$id";
-            exit;
-        }
+
 		
 		
 		if(!empty($err)){
 			
 			$sQuery = "update emails set `check`='0', log='". $err . "',  updated_at=Now() where id=$id";
 			//mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+			exit;
 			
 		} else {
 		
