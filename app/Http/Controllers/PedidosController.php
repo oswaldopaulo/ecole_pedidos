@@ -57,6 +57,8 @@ class PedidosController extends Controller
 	
 	function update(){
 	    
+	 
+	    
 	    $p = Pedidos::find(Request::input('id'));
 	    
 	    $entrega = date_format(date_create_from_format('Y-m-d', Request::input('entrega')), 'd/m/Y');
@@ -64,6 +66,7 @@ class PedidosController extends Controller
 	    $p->update([
 	           'cnpj_repres' => Request::input('cliente'),
 	           'cnpj_trans'=>Request::input('trans'),
+	           'transportadora'=>Request::input('btrans'),
 	           'cod_repres'=>Request::input('repres'),
 	           'cod_cond_pgto'=>Request::input('cond'),
                'entrega'=>$entrega	        
@@ -431,12 +434,13 @@ class PedidosController extends Controller
 		
 	}
 	
-	function getCond($id){
+	function getCond(){
+	    $id = Request::input('id');
 		if ($id=='*'){
 			$cons = CondPgto::select(['cod_cnd_pgto','den_cnd_pgto'])->get();
 		} else {
 			$cons = CondPgto::select(['cod_cnd_pgto','den_cnd_pgto'])
-			->where("cod_cnd_pgto", "like", '%' . strtoupper($id) . '%' )
+			->orWhere("cod_cnd_pgto", "like", '%' . strtoupper($id) . '%' )
 			->orWhere('den_cnd_pgto','like','%' .  strtoupper($id) . '%')
 			->orderby('den_cnd_pgto')
 			->get();

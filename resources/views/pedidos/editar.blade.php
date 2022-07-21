@@ -51,7 +51,7 @@ function getCond(){
 
 
 	
-	$.get("{{ url('pedidos/getCond/')}}" + "/" + id, 
+	$.get("{{ url('pedidos/getCond/')}}" + "?id=" + id, 
 			//{ option: document.getElementById("bcliente").value }, 
 			function(data) {
 				var cond = $('#cond');
@@ -101,7 +101,7 @@ function getCond(){
 	
 	<div class="form-inline ">
 		<label>Transportadora</label>
-		<input id="btrans" name="btrans" class="form-control" placeholder="Pesquisa: Nome ou COD" value="{{ str_replace(['.',',','/','-'], '',$r->cnpj_trans) }}"">
+		<input id="btrans" name="btrans" class="form-control" placeholder="Pesquisa: Nome ou COD" value="{{ str_replace(['.',',','/','-'], '',$r->transportadora) }}"">
 		<span><a  href="javascript:getTrans()"   class="glyphicon glyphicon-refresh" role="button" style="color:green"></a></span>
 		<select id="trans" name="trans"   class="form-control" placeholder="Faça uma busca" required>
 		</select>
@@ -129,15 +129,8 @@ function getCond(){
 	
 	<div class="form-inline ">
 		<label>Date de Entrega</label>
-		<?php $entrega = ''; ?>
-		@if (DateTime::createFromFormat('Y-m-d', $r->entrega) !== FALSE) 
-			$entrega = date_format(date_create_from_format('d/m/Y', $r->entrega), 'Y-m-d');
 		
-		@elseif (DateTime::createFromFormat('d/m/Y', $r->entrega) !== FALSE) 
-			$entrega = date_format(date_create_from_format('Y-m-d', $r->entrega), 'd/m/Y');
-		@endif
-		
-		<input id="entrega" name="entrega" type="date" class="form-control" placeholder="Data " value="{{ $entrega }}" required>
+		<input id="entrega" name="entrega" type="date" class="form-control" placeholder="Data " value="{{ $r->entrega }}" required>
 		{{ $r->entrega }}
 		</select>
 			

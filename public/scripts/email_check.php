@@ -1,7 +1,12 @@
 <?php
 ini_set('memory_limit', '-1');
+ini_set('error_reporting', 'E_ALL & ~E_NOTICE');
+date_default_timezone_set('America/Sao_Paulo');
+
+
 require_once("_conexao.php");
 require_once "../../vendor/autoload.php";
+
 
 $filename='';
 
@@ -172,7 +177,7 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 							$cod_repres= $objPHPExcel->getActiveSheet()->getCell('J3')->getFormattedValue();
 							$nome_repres= $objPHPExcel->getActiveSheet()->getCell('K3')->getFormattedValue();
 							$tel_repres= $objPHPExcel->getActiveSheet()->getCell('M4')->getFormattedValue();
-							//$cnpj_repres= $objPHPExcel->getActiveSheet()->getCell('K7')->getFormattedValue();
+							$cnpj_repres= $objPHPExcel->getActiveSheet()->getCell('L5')->getFormattedValue();
 							//$ie_repres= $objPHPExcel->getActiveSheet()->getCell('G7')->getFormattedValue();
 							//$num_repres= $objPHPExcel->getActiveSheet()->getCell('E8')->getFormattedValue();
 							//$bairro_repres= $objPHPExcel->getActiveSheet()->getCell('K8')->getFormattedValue();
@@ -203,13 +208,13 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 								$descricao=$objPHPExcel->getActiveSheet()->getCell('C'.$i)->getFormattedValue();
 								$unid_venda_des=$objPHPExcel->getActiveSheet()->getCell('D'.$i)->getFormattedValue();
 								$unid_venda=$objPHPExcel->getActiveSheet()->getCell('E'.$i)->getFormattedValue();
-								$ipi=$objPHPExcel->getActiveSheet()->getCell('F'.$i)->getFormattedValue();
+								$ipi=str_replace('%','',$objPHPExcel->getActiveSheet()->getCell('F'.$i)->getFormattedValue());
 								$caixa_master=$objPHPExcel->getActiveSheet()->getCell('G'.$i)->getFormattedValue();
 								$preco_tabela=$objPHPExcel->getActiveSheet()->getCell('I'.$i)->getFormattedValue();
 								$preco_desc_reg=$objPHPExcel->getActiveSheet()->getCell('J'.$i)->getFormattedValue();
 								$preco_negociado=$objPHPExcel->getActiveSheet()->getCell('K'.$i)->getFormattedValue();
 								$preco_final=$objPHPExcel->getActiveSheet()->getCell('L'.$i)->getFormattedValue();
-								$total=$objPHPExcel->getActiveSheet()->getCell('M'.$i)->getFormattedValue();
+								$total=str_replace(',','',$objPHPExcel->getActiveSheet()->getCell('M'.$i)->getFormattedValue());
 
                                 $marca = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getFormattedValue();
 								if(!empty($qtd) && !empty($cod_item)){
@@ -264,6 +269,7 @@ $rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 while ( $aRow = mysql_fetch_array( $rResult ) ){
 	//print_r($aRow);	
 		$id = $aRow['id'];
+		$emailid = $aRow['id'];
 		$tipo = strtolower($aRow['tipo']);
 		$servidor = $aRow['servidor'];
 		$porta = $aRow['porta'];
@@ -305,6 +311,10 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 				
 				//echo '<p>' . imap_uid($mbox,$m) . '</p>'; 
 				$existAttachments = existAttachment($struct,$mbox,$m,$a,2);
+				
+				
+				echo $sQuery = "update emails set `check`='1', log='', uid = $uid,  updated_at=Now() where id=$emailid";
+				mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 			
 				
 				if(!empty($filename)){
@@ -317,7 +327,7 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 			imap_close($mbox);
 			
 			if(empty($firt_uid)) $firt_uid='0';
-			echo $sQuery = "update emails set `check`='1', log='', uid = $firt_uid,  updated_at=Now() where id=$id";
+			echo $sQuery = "update emails set `check`='1', log='', uid = $firt_uid,  updated_at=Now() where id=$emailid";
 			mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 		
 		

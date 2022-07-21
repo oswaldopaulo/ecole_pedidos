@@ -56,5 +56,5 @@ Route::post('/pedidos/envialogix', 'PedidosController@envialogix');
 Route::get('/pedidos/getTrans/{id}', 'PedidosController@getTrans');
 Route::get('/pedidos/getClientes/{id}', 'PedidosController@getClientes');
 Route::get('/pedidos/getRepres/{id}', 'PedidosController@getRepres');
-Route::get('/pedidos/getCond/{id}', 'PedidosController@getCond');
+Route::get('/pedidos/getCond/', 'PedidosController@getCond');
 Route::get('/pedidos/integrar/', 'PedidosController@integrar');
