@@ -66,6 +66,7 @@ $campos = explode(', ',"id, updated_at, cnpj_repres, cliente, cnpj_trans, transp
 
 <a href="{{url('pedidos/editar/'. $r->id)}}"><span class="glyphicon glyphicon-pencil"></span></a>
 <a href="{{url('pedidos/detalhes/'. $r->id)}}"><span class="glyphicon glyphicon-search"></span></a>
+<a href="{{asset($r->arquivo)}}"><span class="glyphicon glyphicon-download-alt"></span></a>
 <!--
  <a href="javascript:confirma_exclusao('{{action('PedidosController@remover', $r->id)}}')"><span class="glyphicon glyphicon-trash"></span></a>
   -->

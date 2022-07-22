@@ -1,9 +1,10 @@
 <link href="{{asset('css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+
 <link href="{{asset('css/buttons.bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{asset('datatables/extensions/Responsive/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{asset('datatables/extensions/Select/css/select.bootstrap.min.css')}}" rel="stylesheet">
 
-   
+
 
 <script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/dataTables.bootstrap.min.js')}}"></script>
@@ -76,7 +77,7 @@ $(document).ready(function() {
 			'print'
 		],
 		
-		 "order": [[ 1, "asc" ]],
+		 "order": [[ 3, "desc" ]],
 		
 		 "oLanguage": {
             				"sProcessing": "Processando...",

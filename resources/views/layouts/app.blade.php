@@ -14,46 +14,48 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
-   
+   <style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #eee;
+}
+</style>
     
     
 
 </head>
 <body>
     <div id="app">
+    @if (Auth::user())
         <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-left">
+    <h1>Controle de Pedidos</h1>         
+            
+ <ul>
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                        
+                            <li>
+                              
 
-                                <ul class="dropdown-menu" role="menu">
+                                <ul>
                                 		<li><a href="{{ url('pedidos') }}">Pedidos Recebidos</a></li>
                                         <li><a href="{{ url('pedidos/check') }}">Pedidos Checados</a></li>
                                         <li><a href="{{ url('emails') }}">Emails</a><li>
@@ -72,14 +74,15 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif
+                      
                     </ul>
-                </div>
-            </div>
+            
         </nav>
-
+        
+		@endif
         @yield('content')
     </div>
+    
 
     <!-- Scripts -->
      

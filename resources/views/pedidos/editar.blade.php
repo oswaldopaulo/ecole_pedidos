@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
-<<script type="text/javascript">
+
+@php
+	use Carbon\Carbon;
+	
+	try{
+		$entrega = Carbon::createFromFormat('d/m/Y', $r->entrega);
+	} catch(\Exception $e){
+		$entrega = '';
+	}
+@endphp
+<script type="text/javascript">
 
 function getTrans(){
  
@@ -87,7 +97,14 @@ function getCond(){
 	<input type="hidden"
 	name="id" value="{{ $r->id }}" />
 	
+	<div class="form-inline">
+		<label>Arquivo</label>
+		<a href="{{asset($r->arquivo)}}"><span class="glyphicon glyphicon-download-alt"> {{ $r->arquivo}}</span></a>
+		</select>
+			
+	</div>
 	
+	<br><br>
 
 	
 	<div class="form-inline">
@@ -130,8 +147,8 @@ function getCond(){
 	<div class="form-inline ">
 		<label>Date de Entrega</label>
 		
-		<input id="entrega" name="entrega" type="date" class="form-control" placeholder="Data " value="{{ $r->entrega }}" required>
-		{{ $r->entrega }}
+		<input id="entrega" name="entrega" type="date" class="form-control" placeholder="Data " value="{{ $entrega?$entrega->format('Y-m-d'):'' }}" required>
+		{{ $entrega?$entrega->format('d/m/Y'):$r->entrega }}
 		</select>
 			
 	</div>
