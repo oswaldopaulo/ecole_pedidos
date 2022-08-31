@@ -87,6 +87,8 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 			
 				
 				if(substr($filename,strlen($filename)-4,4)=='.xls' || substr($filename,strlen($filename)-5,5)=='.xlsx'){
+				    
+				
 					
 				
 				    if(substr($filename,strlen($filename)-4,4)=='.xls'){
@@ -103,7 +105,7 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 				        
 				    }
 				    
-				    $filename = str_replace(['utf-8','\'',')','(','[',']','%','?'],'',$filename); 
+				    $filename = str_replace(['utf-8','\'',')','(','[',']','%','?','-'],'',$filename); 
 				    $filename = str_replace(['.',' '],'_',$filename); 
 				    
 				    $filename .= $ext;
@@ -111,7 +113,7 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 				 
 				        $dados = imap_fetchbody($mbox, $uid, $sec);
 				  
-				    
+				
 				    if ($coding == 0) {
 				        $dados = imap_7bit($dados);
 				    } elseif ($coding == 1) {
@@ -127,7 +129,7 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 				    }
 					
 				
-					$arq = fopen("../xls/".$filename,"w") or die("can't open file");
+					$arq = fopen("../xls/".$filename,"w");
 					
 									
 				   print ($uid . " " . $coding . " " . $filename . " \n");
@@ -140,8 +142,10 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 
 					fclose($arq);
 					
+					
+					
 					$sQuery = "INSERT INTO arquivos (caminho,created_at,updated_at) VALUES('xls/$filename',now(),now())";
-					mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+					mysql_query( $sQuery, $gaSql['link'] );
 					
 					$id_arquivo = mysql_insert_id();
 					
@@ -156,14 +160,16 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 					//$objPHPExcel->setActiveSheetIndex(3);
 					//$t = $objPHPExcel->getActiveSheet()->toArray(null, true,true,true);
 					
-					
+					//echo "arquivo: " . $filename;
+					//var_dump($objPHPExcel);
+					$objPHPExcel->getActiveSheet()->getCell('A5')->getValue();
 					try { 
 						
-					
+					   
 
 					if($objPHPExcel->getActiveSheet()->getCell('A5')->getValue()=="CLIENTE" && $objPHPExcel->getActiveSheet()->getCell('K5')->getValue()=="CNPJ"){
 						
-					    $pcod = strpos($objPHPExcel->getActiveSheet()->getCell('C13')->getFormattedValue(),' ');
+					    $pcod = strpos($objPHPExcel->getActiveSheet()->getCell('C11')->getFormattedValue(),' ');
 					    
 						$cliente= GetSQLValueString($objPHPExcel->getActiveSheet()->getCell('B5')->getFormattedValue(), "text");
 						$endereco= GetSQLValueString($objPHPExcel->getActiveSheet()->getCell('B6')->getFormattedValue(), "text");
@@ -196,7 +202,7 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 							//$cep_repres= $objPHPExcel->getActiveSheet()->getCell('I9')->getFormattedValue();
 							
 							$sQuery= "INSERT INTO pedidos ( cliente, endereco, cidade, telefone, transportadora, cnpj_trans,cod_cond_pgto, cond_pgto, entrega, cod_repres, nome_repres, tel_repres, cnpj_repres, ie_repres, num_repres, bairro_repres, uf_repres, contato_repres, suframa, email, preco_base, tipo_desconto, regiao_uf, desconto_regiao, observacao, inf_adicional, dat_emissao, repres_num_pedido,arquivo) VALUES( $cliente, $endereco, '$cidade', '$telefone', '$transportadora', '$cnpj_trans','$cod_cond_pgto', '$cond_pgto', '$entrega', '$cod_repres', '$nome_repres', '$tel_repres', '$cnpj_repres', '$ie_repres', '$num_repres', '$bairro_repres', '$uf_repres', '$contato_repres', '$suframa', '$email', '$preco_base', '$tipo_desconto', '$regiao_uf', '$desconto_regiao', '$observacao', '$inf_adicional', '$dat_emissao', '$repres_num_pedido', 'xls/$filename' )";
-							mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+							mysql_query( $sQuery, $gaSql['link'] );
 							
 							$id_pedido = mysql_insert_id();
 							
@@ -219,14 +225,14 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
                                 $marca = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getFormattedValue();
 								if(!empty($qtd) && !empty($cod_item)){
 									$sQuery= "INSERT INTO pedidos_item ( id_pedido, qtd, cod_item, descricao, unid_venda_des, unid_venda, ipi, caixa_master, preco_tabela, preco_desc_reg, preco_negociado, preco_final, total )  VALUES( '$id_pedido', '$qtd', '$cod_item', '$descricao', '$unid_venda_des', '$unid_venda', '$ipi', '$caixa_master', '$preco_tabela', '$preco_desc_reg', '$preco_negociado', '$preco_final', '$total' )";
-									mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+									mysql_query( $sQuery, $gaSql['link'] );
 									
 								}
 							}
 						
 						
 							$sQuery= "update arquivos set  integrado='1' where id=$id_arquivo";
-							mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+							mysql_query( $sQuery, $gaSql['link'] );
 							
 							$fp = fopen('./modelo.txt', 'r');
 						
@@ -244,11 +250,12 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 					
 					} else {
 					    $sQuery= "update arquivos set  log='Arquivo invalido' where id=$id_arquivo";
-					    mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+					    mysql_query( $sQuery, $gaSql['link'] );
 					}
 					} catch (Exception $e) {
+					    echo $e;
 					     $sQuery= "update arquivos set  log='$e->getMessage()' where id=$id_arquivo";
-					    mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+					    mysql_query( $sQuery, $gaSql['link'] );
 						//echo "Exceção capturada $filename: ",  $e->getMessage(), "\n";
 					
 					}
@@ -264,7 +271,7 @@ function existAttachment($part,$mbox,$uid,$a,$sec){
 
 
 $sQuery = "Select * from emails where ativo=1";
-$rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+$rResult = mysql_query( $sQuery, $gaSql['link'] );
 	
 while ( $aRow = mysql_fetch_array( $rResult ) ){
 	//print_r($aRow);	
@@ -292,7 +299,7 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 		if(!empty($err)){
 			
 			$sQuery = "update emails set `check`='0', log='". $err . "',  updated_at=Now() where id=$id";
-			//mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+			mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 			exit;
 			
 		} else {
@@ -302,8 +309,18 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 			
 			$firt_uid = imap_uid($mbox,imap_num_msg($mbox));
 			
-			for($m = imap_num_msg($mbox); $m >= 1; $m--){ 
+			
+			for($m = imap_num_msg($mbox); $m >= 1; $m--){
+			    
+			    
+			    
 				$uid = imap_uid($mbox,$m);
+				
+				echo "uid= $uid" . " idmail=$id";
+				    
+				$sQuery = "update emails set `check`='1', log='', uid = $uid,  updated_at=Now() where id=$id";
+				mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+				
 				if($uid <=$last_uid) break;
 				//if($uid != 58) continue;
 				
@@ -313,22 +330,22 @@ while ( $aRow = mysql_fetch_array( $rResult ) ){
 				$existAttachments = existAttachment($struct,$mbox,$m,$a,2);
 				
 				
-				echo $sQuery = "update emails set `check`='1', log='', uid = $uid,  updated_at=Now() where id=$emailid";
-				mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+				//$sQuery = "update emails set `check`='1', log='', uid = $uid,  updated_at=Now() where id=$emailid";
+				//mysql_query( $sQuery, $gaSql['link'] );
 			
 				
 				if(!empty($filename)){
 					$sQuery = "INSERT INTO arquivos (caminho,created_at,updated_at) VALUES('xls/$filename',now(),now())";
-					mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+					mysql_query( $sQuery, $gaSql['link'] );
 				}
 			
 			}
-			
+			echo $sQuery = "update emails set `check`='1', log='', uid = $firt_uid,  updated_at=Now() where id=$emailid";
+			mysql_query( $sQuery, $gaSql['link'] );
 			imap_close($mbox);
 			
-			if(empty($firt_uid)) $firt_uid='0';
-			echo $sQuery = "update emails set `check`='1', log='', uid = $firt_uid,  updated_at=Now() where id=$emailid";
-			mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
+			//if(empty($firt_uid)) $firt_uid='0';
+			
 		
 		
 		}
